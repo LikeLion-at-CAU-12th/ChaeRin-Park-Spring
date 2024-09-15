@@ -24,6 +24,7 @@ public class Playlist {
     @Column(name = "playlist_id")
     private Long id;
 
+    @Column(unique = true)      // 중복을 방지
     private String name;
 
     private String description;
@@ -38,10 +39,14 @@ public class Playlist {
             joinColumns = @JoinColumn(name = "playlist_id"),    // 중간 테이블의 playlist_id 열
             inverseJoinColumns = @JoinColumn(name = "song_id")      // 중간 테이블의 song_id 열
     )
+    @Builder.Default
     private List<Song> songs = new ArrayList<>();       // 플리에 포함된 곡들을 관리하는 리스트 (객체 생성 시 빈 리스트로 초기화)
 
     // 곡을 플리에 추가
     public void addSong(Song song) {
+        if (song == null || song.getId() == null) {
+            throw new IllegalArgumentException("유효하지 않은 곡입니다.");
+        }
         this.songs.add(song);
     }
 

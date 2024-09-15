@@ -6,6 +6,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "LIKES")
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
