@@ -29,14 +29,13 @@ public class PlaylistRepositoryTest {
     public void makePlaylist() {
         // 우선 멤버를 만듦
         Member member = Member.builder()
-                .name("Chaelin")
+                .name("Chaelin 1")
                 .email("Chaelin@mutsa.com")
                 .build();
         memberRepository.save(member);
 
         Playlist playlist = Playlist.builder()
                 .name("Chaelin's Playlist")
-                .owner(member)
                 .build();
 
         // 플레이리스트를 만듦
@@ -45,14 +44,14 @@ public class PlaylistRepositoryTest {
         // 플레이리스트가 잘 만들어졌는지 확인
         Playlist foundPlaylist = playlistRepository.findById(playlist.getId()).get();
         assertEquals("Chaelin's Playlist", foundPlaylist.getName());
-        assertEquals(member.getId(), foundPlaylist.getOwner().getId());
     }
+
 
     @Test
     public void makePlaylistFail() {
         // 멤버를 만듦
         Member member = Member.builder()
-                .name("Chaelin")
+                .name("Chaelin 2")
                 .email("chaelin@mutsa.com")
                 .build();
         memberRepository.save(member);
@@ -60,13 +59,11 @@ public class PlaylistRepositoryTest {
         // 플레이리스트 생성
         Playlist playlist1 = Playlist.builder()
                 .name("My Playlist")
-                .owner(member)
                 .build();
         playlistRepository.save(playlist1);
 
         Playlist playlist2 = Playlist.builder()
                 .name("My Playlist") // 같은 이름의 플레이리스트 생성
-                .owner(member)
                 .build();
 
         // 테스트
@@ -79,7 +76,7 @@ public class PlaylistRepositoryTest {
     public void successAddSong() {
         // 플레이리스트 생성
         Playlist playlist = Playlist.builder()
-                .name("My Playlist")
+                .name("Chaelin 3")
                 .build();
         playlistRepository.save(playlist);
 
@@ -103,7 +100,7 @@ public class PlaylistRepositoryTest {
     public void failAddSong() {
         // 플레이리스트 생성
         Playlist playlist = Playlist.builder()
-                .name("My Playlist")
+                .name("Chaelin 4")
                 .build();
         playlistRepository.save(playlist);
 

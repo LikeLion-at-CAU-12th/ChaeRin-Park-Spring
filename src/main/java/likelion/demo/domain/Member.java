@@ -27,10 +27,10 @@ public class Member {
     private LocalDateTime createdAt;
 
     // 멤버와 플레이리스트의 일대다 관계
-    // mappedBy -> Playlist 엔티티에서 owner 필드를 통해 이 관계가 매핑됨
     // cascade -> 멤버가 삭제되거나 변경될 때 관련된 Playlist도 함께 처리
     // orphanRemoval -> 멤버와 연결된 플리가 더 이상 사용되지 않으면 자동으로 삭제
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "member_id")     // 플리 테이블에 fk 생성
     private List<Playlist> playlists = new ArrayList<>();
 
     // 멤버와 좋아요의 일대다 관계 (플리와 동일한 방식으로 처리)
@@ -40,15 +40,12 @@ public class Member {
     // 사용자의 플레이리스트 목록에 새로운 플레이리스트를 추가 -> 해당 플레이리스트의 사용자를 현재 사용자로 설정
     public void addPlaylist(Playlist playlist) {
         this.playlists.add(playlist);
-        playlist.setOwner(this);
     }
 
-    // 사용자의 플레이리스트 목록에서 특정 플레이리스트를 삭제 -> 해당 플레이리스트의 소유자를 null로 설정
+    // 사용자의 플레이리스트 목록에서 특정 플레이리스트를 삭제
     public void removePlaylist(Playlist playlist) {
         this.playlists.remove(playlist);
-        playlist.setOwner(null);
     }
-
 
     // 사용자가 좋아요를 누른 곡 목록에 새로운 좋아요를 추가하고, 해당 좋아요 소유자를 현재 사용자로 설정
     public void addLike(Like like) {

@@ -29,10 +29,6 @@ public class Playlist {
 
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)      // 플리와 멤버 다대일 관계, 지연 로딩 (필요할 때만 Member 가져옴)
-    @JoinColumn(name = "member_id")     // member_id 컬럼을 통해 멤버와 연결
-    private Member owner;
-
     @ManyToMany     // 플레이리스트와 음악은 다대다 관계 (하나의 플리는 여러 곡 포함, 하나의 곡은 여러 플리에)
     @JoinTable(     // 다대다 관계를 표현하기 위한 중간 테이블 설정
             name = "playlist_song",     // 중간 테이블 이름

@@ -6,7 +6,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "LIKES")
+@Table(name = "LIKES", uniqueConstraints = {@UniqueConstraint(columnNames = {"member_id", "song_id"})})     // @UniqueConstraint를 멤버와 음악을 조합하여 고유 조건 생성
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

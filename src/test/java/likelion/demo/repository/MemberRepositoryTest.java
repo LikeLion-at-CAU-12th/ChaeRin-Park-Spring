@@ -53,13 +53,11 @@ public class MemberRepositoryTest {
         // 플레이리스트 생성
         Playlist playlist1 = Playlist.builder()
                 .name("My Playlist")
-                .owner(member)
                 .build();
         playlistRepository.save(playlist1);
 
         Playlist playlist2 = Playlist.builder()
                 .name("My Playlist") // 같은 이름의 플레이리스트 생성
-                .owner(member)
                 .build();
 
         // 테스트

@@ -44,9 +44,6 @@ public class Song {
     )
     private List<Genre> genres = new ArrayList<>();     // song 엔티티가 여러 개의 장르와 관련될 수 있으므로 리스트로 설정
 
-    @ManyToMany(mappedBy = "songs")     // 음악과 플레이리스트는 다대다 관계
-    private List<Playlist> playlists = new ArrayList<>();       // 해당 song 엔티티가 들어있는 여러 플리 목록
-
     @OneToMany(mappedBy = "song", cascade = CascadeType.ALL, orphanRemoval = true)      // 음악과 좋아요는 일대다 관계
     private List<Like> likes = new ArrayList<>();
 
@@ -60,18 +57,6 @@ public class Song {
     public void removeGenre(Genre genre) {
         this.genres.remove(genre);
         genre.getSongs().remove(this);
-    }
-
-    // 플리 추가
-    public void addPlaylist(Playlist playlist) {
-        this.playlists.add(playlist);
-        playlist.getSongs().add(this);
-    }
-
-    // 플리 삭제
-    public void removePlaylist(Playlist playlist) {
-        this.playlists.remove(playlist);
-        playlist.getSongs().remove(this);
     }
 
     public void addLike(Like like) {
