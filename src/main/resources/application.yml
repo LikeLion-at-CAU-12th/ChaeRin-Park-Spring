@@ -9,7 +9,7 @@ spring:
       enabled: true # H2 콘솔을 활성화합니다.
       path: /h2-console # H2 콘솔의 접근 경로
   hibernate:
-    ddl-auto: create # Hibernate의 DDL 자동 생성 전략 (update, create, create-drop 등)
+    ddl-auto: update # Hibernate의 DDL 자동 생성 전략 (update, create, create-drop 등)
   properties:
     hibernate:
       format_sql: true # 얘는 실제 디비로 나가는 sql을 보여줍니다
