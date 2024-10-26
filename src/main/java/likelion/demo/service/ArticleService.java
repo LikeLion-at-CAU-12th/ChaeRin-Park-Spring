@@ -82,17 +82,25 @@ public class ArticleService {
         // Article 저장 (JPA는 영속성 컨텍스트 내에서 필드만 수정해도 자동으로 update가 반영됨)
         articleRepository.save(article);
 
-        // 기존 ArticleLog 업데이트
-        ArticleLog articleLog = articleLogRepository.findByArticle(article)
-                .orElseThrow(() -> new RuntimeException("해당 Article과 연관된 로그가 존재하지 않습니다."));
+        // 이전 ArticleLog의 createdAt을 복사
+        ArticleLog previousLog = articleLogRepository.findTopByArticleOrderByCreatedAtDesc(article)
+                .orElse(null);
 
-        articleLog.setTitle(requestDto.getTitle());
-        articleLog.setContent(requestDto.getContent());
-        articleLog.setArticle(article);
-        articleLog.setUpdatedAt(LocalDateTime.now());
+        ArticleLog newLog = ArticleLog.builder()
+                .title(requestDto.getTitle())
+                .content(requestDto.getContent())
+                .article(article)
+                .build();
 
-        // 변경된 로그 저장
-        articleLogRepository.save(articleLog);
+        // 새로운 ArticleLog의 createdAt을 이전 로그의 createdAt으로 설정
+        if (previousLog != null) {
+            newLog.setCreatedAt(previousLog.getCreatedAt());
+        } else {
+            newLog.setCreatedAt(LocalDateTime.now()); // 첫 번째 로그인 경우 현재 시간 설정
+        }
+        // 수동으로 updatedAt 설정
+        newLog.setUpdatedAt(LocalDateTime.now());
+        articleLogRepository.save(newLog);
 
         // 카테고리 업데이트 로직 (기존의 연관된 카테고리 제거 후 새로 추가)
         List<CategoryArticle> existingCategoryArticles = categoryArticleRepository.findByArticle(article);

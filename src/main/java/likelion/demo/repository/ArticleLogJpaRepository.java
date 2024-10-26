@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface ArticleLogJpaRepository extends JpaRepository<ArticleLog, Long> {
     Optional<ArticleLog> findByArticle(Article article);
     void deleteByArticle(Article article);
+    Optional<ArticleLog> findTopByArticleOrderByCreatedAtDesc(Article article);
 }
