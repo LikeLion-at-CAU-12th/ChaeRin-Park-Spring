@@ -12,6 +12,7 @@ public class Comment {
     @Column(name = "comment_id")
     private Long id;
     private String content;
+
     @ManyToOne
     @JoinColumn(name = "article_id")
     private Article article;

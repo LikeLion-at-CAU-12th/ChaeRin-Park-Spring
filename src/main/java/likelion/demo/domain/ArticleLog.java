@@ -17,7 +17,7 @@ public class ArticleLog extends BaseTimeEntity {
     private String title;
     private String content;
 
-    @OneToOne(cascade = ALL, fetch = LAZY)
+    @ManyToOne
     @JoinColumn(name = "article_id")
     private Article article;
 

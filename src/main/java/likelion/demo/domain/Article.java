@@ -25,8 +25,10 @@ public class Article {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    //추가
-    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ArticleLog> articleLogs = new ArrayList<>();
+
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
     @Builder
@@ -35,5 +37,6 @@ public class Article {
         this.content = content;
         this.member = member;
         this.comments = comments != null ? comments : new ArrayList<>();
+        this.articleLogs = new ArrayList<>();
     }
 }
