@@ -11,6 +11,7 @@ import likelion.demo.dto.response.CommentResponseDto;
 import likelion.demo.repository.ArticleJpaRepository;
 import likelion.demo.repository.CommentJpaRepository;
 import likelion.demo.repository.MemberJpaRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +19,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class CommentService {
-    @Autowired
-    CommentJpaRepository commentRepository;
-    @Autowired
-    ArticleJpaRepository articleRepository;
-    @Autowired
-    MemberJpaRepository memberRepository;
+    private final CommentJpaRepository commentRepository;
+    private final ArticleJpaRepository articleRepository;
+    private final MemberJpaRepository memberRepository;
 
     @Transactional
     public Long createComment(CommentCreateRequestDto requestDto) {

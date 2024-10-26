@@ -6,6 +6,7 @@ import likelion.demo.dto.request.ArticleCreateRequestDto;
 import likelion.demo.dto.request.ArticleUpdateRequestDto;
 import likelion.demo.dto.response.ArticleResponseDto;
 import likelion.demo.repository.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.event.TransactionalEventListener;
@@ -16,17 +17,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class ArticleService {
-    @Autowired
-    private MemberJpaRepository memberRepository;
-    @Autowired
-    private ArticleJpaRepository articleRepository;
-    @Autowired
-    private CategoryArticleJpaRepository categoryArticleRepository;
-    @Autowired
-    private ArticleLogJpaRepository articleLogRepository;
-    @Autowired
-    private CategoryJpaRepository categoryRepository;
+    private final MemberJpaRepository memberRepository;
+    private final ArticleJpaRepository articleRepository;
+    private final CategoryArticleJpaRepository categoryArticleRepository;
+    private final ArticleLogJpaRepository articleLogRepository;
+    private final CategoryJpaRepository categoryRepository;
 
     @Transactional
     public Long createArticle(ArticleCreateRequestDto requestDto) {

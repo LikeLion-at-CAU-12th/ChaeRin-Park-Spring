@@ -6,6 +6,7 @@ import likelion.demo.dto.response.ArticleResponseDto;
 import likelion.demo.dto.response.CommentResponseDto;
 import likelion.demo.service.ArticleService;
 import likelion.demo.service.CommentService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +16,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/comments")
+@RequiredArgsConstructor
 public class CommentController {
 
-    @Autowired
-    CommentService commentService;
+    private final CommentService commentService;
 
     @PostMapping("")
     public ResponseEntity<Long> createComment(@RequestBody CommentCreateRequestDto requestDto) {
@@ -27,7 +28,7 @@ public class CommentController {
     }
 
     @GetMapping("/article/{articleId}")
-    public ResponseEntity<List<CommentResponseDto>> getArticlesByMemberId(@PathVariable Long articleId) {
+    public ResponseEntity<List<CommentResponseDto>> getCommentsByArticleId(@PathVariable Long articleId) {
         List<CommentResponseDto> comments = commentService.findCommentsByArticleId(articleId);
         if (comments.isEmpty()) {
             return ResponseEntity.noContent().build();

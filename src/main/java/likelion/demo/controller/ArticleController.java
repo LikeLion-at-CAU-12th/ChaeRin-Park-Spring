@@ -4,6 +4,7 @@ import likelion.demo.dto.request.ArticleCreateRequestDto;
 import likelion.demo.dto.request.ArticleUpdateRequestDto;
 import likelion.demo.dto.response.ArticleResponseDto;
 import likelion.demo.service.ArticleService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +14,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/articles")
+@RequiredArgsConstructor
 public class ArticleController {
 
-    @Autowired
-    private ArticleService articleService;
+    private final ArticleService articleService;
 
     // api/v1/articles
     @PostMapping("")
